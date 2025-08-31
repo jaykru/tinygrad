@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 pip install uv
 uv venv
 source .venv/bin/activate
