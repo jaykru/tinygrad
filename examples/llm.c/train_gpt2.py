@@ -192,9 +192,15 @@ if __name__ == "__main__":
     t1 = time.perf_counter()
     print(f"iteration {i}, loss: {loss.item():.6f}, time: {(t1-t0)*1000:.3f}ms, {int(B*T/(t1-t0))} tok/s, {GlobalCounters.global_mem/1e9:.2f} GB")
     peak_flops = 1492
-    parameter_count = len(nn.state.get_parameters(model))
-    print("{parameter_count} parameters")
-    step_flops = 6*parameter_count*B*T
+    params = nn.state.get_parameters(model)
+    total_param_count = 0
+    for p in params:
+      param_count = 1
+      for s in p.shape:
+        param_count *= s
+      total_param_count += param_count
+    print(f"{total_param_count} parameters")
+    step_flops = 6*total_param_count*B*T
     time_seconds = (t1 - t0)
     achieved_flops = step_flops / time_seconds
 
