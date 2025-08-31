@@ -191,7 +191,7 @@ if __name__ == "__main__":
     Device[Device.DEFAULT].synchronize()
     t1 = time.perf_counter()
     print(f"iteration {i}, loss: {loss.item():.6f}, time: {(t1-t0)*1000:.3f}ms, {int(B*T/(t1-t0))} tok/s, {GlobalCounters.global_mem/1e9:.2f} GB")
-    peak_flops = 1492
+    peak_flops = 1492 * 10**12
     params = nn.state.get_parameters(model)
     total_param_count = 0
     for p in params:
